@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="YouTube">
+    <meta name="description" content="YouTube PWA with Ad-Skipping and Background Play">
+    
+    <title>YouTube</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%23FF0000' width='180' height='180'/><path fill='white' d='M75 90l45-30v60z'/></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%23FF0000' width='180' height='180'/><path fill='white' d='M75 90l45-30v60z'/></svg>">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #youtube-container {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            font-size: 14px;
+            color: #888;
+        }
+        
+        .status-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 12px;
+            color: #aaa;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+        
+        .status-bar.hidden {
+            display: none;
+        }
+        
+        #youtube-container {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="status-bar" id="statusBar">
+        <span id="statusText">Loading YouTube...</span>
+    </div>
+    
+    <iframe 
+        id="youtube-container" 
+        src="https://www.youtube.com" 
+        allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+        allowfullscreen
+        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation"
+    ></iframe>
+
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => {
+                    console.log('✅ Service Worker registered:', reg);
+                    updateStatus('Service Worker ready');
+                    setTimeout(() => hideStatus(), 2000);
+                })
+                .catch(err => {
+                    console.error('❌ Service Worker registration failed:', err);
+                    updateStatus('Service Worker error');
+                });
+        }
+        
+        // Update status bar
+        function updateStatus(message) {
+            const statusText = document.getElementById('statusText');
+            if (statusText) {
+                statusText.textContent = message;
+            }
+        }
+        
+        // Hide status bar after delay
+        function hideStatus() {
+            const statusBar = document.getElementById('statusBar');
+            if (statusBar) {
+                statusBar.classList.add('hidden');
+            }
+        }
+        
+        // Handle iframe load
+        const iframe = document.getElementById('youtube-container');
+        iframe.onload = function() {
+            console.log('✅ YouTube loaded');
+            updateStatus('YouTube loaded');
+            setTimeout(() => hideStatus(), 2000);
+        };
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('✅ YouTube PWA initialized');
+            
+            // Load additional scripts
+            const scripts = ['app.js', 'ad-skipper.js', 'bg-audio.js'];
+            scripts.forEach(script => {
+                const tag = document.createElement('script');
+                tag.src = script;
+                tag.async = true;
+                document.body.appendChild(tag);
+            });
+        });
+        
+        // Handle online/offline
+        window.addEventListener('online', () => {
+            console.log('✅ Online');
+            updateStatus('Online');
+            setTimeout(() => hideStatus(), 2000);
+        });
+        
+        window.addEventListener('offline', () => {
+            console.log('⚠️ Offline - cached content available');
+            updateStatus('Offline - cached content available');
+        });
+    </script>
+</body>
+</html>
