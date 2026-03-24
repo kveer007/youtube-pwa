@@ -1,28 +1,14 @@
 {
   "name": "YouTube - Ad-Free with Background Play",
-  "short_name": "YouTube",
+  "short_name": "YouTube PWA",
   "description": "YouTube PWA with ad-skipping and background audio playback",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "/youtube-pwa/",
+  "scope": "/youtube-pwa/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "theme_color": "#000000",
   "background_color": "#000000",
-  "categories": ["video"],
-  "screenshots": [
-    {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%23000' width='540' height='720'/><rect fill='%23FF0000' x='40' y='60' width='460' height='260'/><text fill='white' font-size='24' x='270' y='200' text-anchor='middle' font-family='Arial'>YouTube</text></svg>",
-      "sizes": "540x720",
-      "form_factor": "narrow",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'><rect fill='%23000' width='1280' height='720'/><rect fill='%23FF0000' x='40' y='60' width='600' height='300'/><text fill='white' font-size='32' x='640' y='200' text-anchor='middle' font-family='Arial'>YouTube PWA</text></svg>",
-      "sizes": "1280x720",
-      "form_factor": "wide",
-      "type": "image/svg+xml"
-    }
-  ],
+  "categories": ["video", "productivity", "entertainment"],
   "icons": [
     {
       "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%23FF0000' width='192' height='192'/><path fill='white' d='M72 90l48-32v64z' transform='translate(48 48)'/></svg>",
@@ -31,35 +17,72 @@
       "purpose": "any"
     },
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%23FF0000' width='192' height='192'/><path fill='white' d='M72 90l48-32v64z' transform='translate(48 48)'/></svg>",
-      "sizes": "192x192",
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%23FF0000' width='512' height='512'/><path fill='white' d='M192 240l128-85v170z' transform='translate(128 128)'/></svg>",
+      "sizes": "512x512",
       "type": "image/svg+xml",
-      "purpose": "maskable"
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%23000' width='540' height='720'/><text x='270' y='360' font-size='48' fill='white' text-anchor='middle' dominant-baseline='middle'>YouTube PWA</text></svg>",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'><rect fill='%23000' width='1280' height='720'/><text x='640' y='360' font-size='48' fill='white' text-anchor='middle' dominant-baseline='middle'>YouTube PWA - Desktop</text></svg>",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
     }
   ],
   "shortcuts": [
     {
-      "name": "Play YouTube",
-      "short_name": "Play",
-      "description": "Open YouTube directly",
-      "url": "/youtube-pwa/?source=shortcut",
+      "name": "Skip Ads",
+      "short_name": "Skip Ads",
+      "description": "Skip ads on YouTube videos",
+      "url": "/youtube-pwa/?action=skip-ads",
       "icons": [
         {
-          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect fill='%23FF0000' width='96' height='96'/><path fill='white' d='M36 45l24-16v32z' transform='translate(18 24)'/></svg>",
-          "sizes": "96x96",
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%23FF0000' width='192' height='192'/><text x='96' y='120' font-size='80' fill='white' text-anchor='middle' font-weight='bold'>⏭️</text></svg>",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Background Audio",
+      "short_name": "Background",
+      "description": "Enable background audio playback",
+      "url": "/youtube-pwa/?action=bg-audio",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%23FF0000' width='192' height='192'/><text x='96' y='120' font-size='80' fill='white' text-anchor='middle' font-weight='bold'>🔊</text></svg>",
+          "sizes": "192x192",
           "type": "image/svg+xml"
         }
       ]
     }
   ],
   "share_target": {
-    "action": "/youtube-pwa/",
+    "action": "/share",
     "method": "POST",
-    "enctype": "application/x-www-form-urlencoded",
+    "enctype": "multipart/form-data",
     "params": {
       "title": "title",
       "text": "text",
       "url": "url"
     }
-  }
+  },
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "scope_extensions": [
+    {
+      "origin": "https://www.youtube.com"
+    },
+    {
+      "origin": "https://youtu.be"
+    }
+  ]
 }
