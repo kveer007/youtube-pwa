@@ -4,12 +4,12 @@
 const CACHE_NAME = 'youtube-pwa-v2';
 
 const ASSETS_TO_CACHE = [
-    '/youtube-pwa/index.html',
-    '/youtube-pwa/manifest.json',
-    '/youtube-pwa/app.js',
-    '/youtube-pwa/ad-skipper.js',
-    '/youtube-pwa/bg-audio.js',
-    '/youtube-pwa/sw.js'
+    '/',
+    '/manifest.json',
+    '/app.js',
+    '/ad-skipper.js',
+    '/bg-audio.js',
+    '/sw.js'
 ];
 
 // Install Event - Cache files on first install
